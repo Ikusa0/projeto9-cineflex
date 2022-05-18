@@ -1,0 +1,7 @@
+.home {
+  display: flex;
+  justify-content: center;
+  margin-top: 67px;
+  box-sizing: border-box;
+  padding: 0 30px;
+}

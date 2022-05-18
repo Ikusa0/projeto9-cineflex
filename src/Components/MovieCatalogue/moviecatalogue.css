@@ -1,0 +1,24 @@
+.movie-catalogue {
+  padding-top: 45px;
+  max-width: 315px;
+}
+
+.movie-catalogue h1 {
+  text-align: center;
+
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.movie-catalogue .movie-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 35px;
+}
+
+.movie-catalogue .movie-cover {
+  margin-bottom: 12px;
+}
