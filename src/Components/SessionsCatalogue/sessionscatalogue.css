@@ -1,0 +1,52 @@
+.sessions-catalogue {
+  padding-top: 45px;
+  width: 100%;
+  max-width: 315px;
+}
+
+.sessions-catalogue h1 {
+  text-align: center;
+
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.sessions-catalogue .sessions-container {
+  margin-top: 35px;
+  margin-bottom: 142px;
+}
+
+.sessions-catalogue .day-sessions {
+  margin-bottom: 25px;
+}
+
+.sessions-catalogue .day-sessions h2 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+}
+
+.sessions-catalogue .sessions-times-container {
+  margin-top: 20px;
+}
+
+.sessions-catalogue .sessions-times-container button {
+  width: 83px;
+  height: 43px;
+  border: none;
+
+  background-color: #e8833a;
+  border-radius: 3px;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+
+  color: #ffffff;
+
+  margin-right: 8px;
+}
