@@ -1,4 +1,4 @@
-import "./moviecatalogue.css";
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import MovieCover from "../MovieCover/MovieCover";
@@ -15,17 +15,42 @@ export default function MovieCatalogue() {
   }, []);
 
   return (
-    <div className="movie-catalogue">
+    <Container>
       <h1>Selecione o filme</h1>
-      <div className="movie-container">
+      <MovieContainer>
         {movies ? (
           movies.map((movie, index) => (
-            <MovieCover key={index} cover={movie.posterURL} title={movie.title} id={movie.id} />
+            <MovieCover cover={movie.posterURL} title={movie.title} id={movie.id} key={index} />
           ))
         ) : (
           <Loading />
         )}
-      </div>
-    </div>
+      </MovieContainer>
+    </Container>
   );
 }
+
+// ================================ STYLED COMPONENTS ================================ //
+const Container = styled.div`
+  padding-top: 45px;
+  max-width: 315px;
+
+  h1 {
+    text-align: center;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+  }
+`;
+
+const MovieContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 35px;
+
+  div {
+    margin-bottom: 12px;
+  }
+`;

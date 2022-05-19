@@ -1,12 +1,12 @@
 import Header from "../../Components/Header/Header";
 import MovieCatalogue from "../../Components/MovieCatalogue/MovieCatalogue";
-import "./home.css";
+import Page from "../../Components/Page/Page";
 
 export default function Home() {
   return (
-    <div className="home">
+    <Page>
       <Header />
       <MovieCatalogue />
-    </div>
+    </Page>
   );
 }

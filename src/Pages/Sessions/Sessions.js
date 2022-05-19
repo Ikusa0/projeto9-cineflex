@@ -1,12 +1,12 @@
-import "./sessions.css";
 import Header from "../../Components/Header/Header";
+import Page from "../../Components/Page/Page";
 import SessionsCatalogue from "../../Components/SessionsCatalogue/SessionsCatalogue";
 
 export default function Sessions() {
   return (
-    <div className="sessions">
+    <Page>
       <Header />
       <SessionsCatalogue />
-    </div>
+    </Page>
   );
 }
