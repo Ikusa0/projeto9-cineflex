@@ -4,7 +4,7 @@ import SessionsCatalogue from "../../Components/SessionsCatalogue/SessionsCatalo
 
 export default function Sessions() {
   return (
-    <Page>
+    <Page hasFooter={true}>
       <Header />
       <SessionsCatalogue />
     </Page>

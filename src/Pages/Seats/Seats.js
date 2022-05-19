@@ -1,6 +1,12 @@
-import styled from "styled-components";
 import Page from "../../Components/Page/Page";
+import SeatsCatalogue from "../../Components/SeatsCatalogue/SeatsCatalogue";
+import Header from "../../Components/Header/Header";
 
 export default function Seats() {
-  return <Page></Page>;
+  return (
+    <Page hasFooter={true}>
+      <Header />
+      <SeatsCatalogue />
+    </Page>
+  );
 }

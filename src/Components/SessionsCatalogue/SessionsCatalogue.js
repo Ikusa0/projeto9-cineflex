@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
+import LinkButton from "../LinkButton/LinkButton";
 
 function SessionTime({ time, id }) {
-  return (
-    <Button>
-      <Link to={`/seats/${id}`}>{time}</Link>
-    </Button>
-  );
+  return <LinkButton url={`/seats/${id}`}>{time}</LinkButton>;
 }
 
 function DaySessions({ weekday, date, sessionsTimes }) {
@@ -26,7 +23,7 @@ function DaySessions({ weekday, date, sessionsTimes }) {
   );
 }
 
-export default function MovieCatalogue() {
+export default function SessionsCatalogue() {
   const [sessions, setSessions] = useState(null);
   const { idMovie } = useParams();
 
@@ -40,7 +37,7 @@ export default function MovieCatalogue() {
   return (
     <Container>
       <h1>Selecione o horário</h1>
-      <SessionsContainer>
+      <div>
         {sessions ? (
           sessions.days.map((session, index) => (
             <DaySessions weekday={session.weekday} date={session.date} sessionsTimes={session.showtimes} key={index} />
@@ -48,7 +45,7 @@ export default function MovieCatalogue() {
         ) : (
           <Loading />
         )}
-      </SessionsContainer>
+      </div>
 
       {sessions ? <Footer movieCover={sessions.posterURL} movieTitle={sessions.title} /> : <></>}
     </Container>
@@ -67,12 +64,8 @@ const Container = styled.div`
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
+    margin-bottom: 35px;
   }
-`;
-
-const SessionsContainer = styled.div`
-  margin-top: 35px;
-  margin-bottom: 142px;
 `;
 
 const DaySessionsContainer = styled.div`
@@ -88,18 +81,4 @@ const DaySessionsContainer = styled.div`
   div {
     margin-top: 20px;
   }
-`;
-
-const Button = styled.button`
-  width: 83px;
-  height: 43px;
-  border: none;
-  background-color: #e8833a;
-  border-radius: 3px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 21px;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  margin-right: 8px;
 `;

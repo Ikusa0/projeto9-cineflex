@@ -33,6 +33,7 @@ export default function MovieCatalogue() {
 // ================================ STYLED COMPONENTS ================================ //
 const Container = styled.div`
   padding-top: 45px;
+  width: 100%;
   max-width: 315px;
 
   h1 {
@@ -41,6 +42,7 @@ const Container = styled.div`
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
+    margin-bottom: 35px;
   }
 `;
 
@@ -48,7 +50,6 @@ const MovieContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 35px;
 
   div {
     margin-bottom: 12px;
