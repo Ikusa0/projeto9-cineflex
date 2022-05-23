@@ -36,8 +36,8 @@ export default function SeatsCatalogue() {
   const [seats, setSeats] = useState(null);
   const { idSession } = useParams();
 
-  const [cpf, setCpf] = useState(null);
-  const [name, setName] = useState(null);
+  const [cpf, setCpf] = useState("");
+  const [name, setName] = useState("");
 
   function toggleSeat(index) {
     if (!seats[index].isAvailable) {
@@ -57,6 +57,16 @@ export default function SeatsCatalogue() {
 
     if (ids.length === 0) {
       alert("Selecione ao menos um assento!");
+      return;
+    }
+
+    if (name.length === 0) {
+      alert("Informe seu nome!");
+      return;
+    }
+
+    if (cpf.length === 0) {
+      alert("Informe seu CPF!");
       return;
     }
 
