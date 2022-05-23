@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <Page>
-      <Header />
+      <Header withIcon={true} />
       <ReceiptDescription />
     </Page>
   );

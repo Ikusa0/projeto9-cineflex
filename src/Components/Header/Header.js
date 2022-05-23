@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Header() {
+export default function Header({ withIcon }) {
   const navigate = useNavigate();
 
   function handleClick() {
@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <Container>
-      <ion-icon onClick={handleClick} class="md hydrated icon" name="arrow-undo"></ion-icon>
+      {withIcon ? <ion-icon onClick={handleClick} class="md hydrated icon" name="arrow-undo"></ion-icon> : ""}
       <Link to="/">
         <span>CINEFLEX</span>
       </Link>

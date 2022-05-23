@@ -5,7 +5,7 @@ import Header from "../../Components/Header/Header";
 export default function Seats() {
   return (
     <Page hasFooter={true}>
-      <Header />
+      <Header withIcon={true} />
       <SeatsCatalogue />
     </Page>
   );
