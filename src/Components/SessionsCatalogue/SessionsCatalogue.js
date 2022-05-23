@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import LinkButton from "../LinkButton/LinkButton";
 
 function SessionTime({ time, id }) {
-  return <LinkButton url={`/seats/${id}`}>{time}</LinkButton>;
+  return <LinkButton path={`/seats/${id}`}>{time}</LinkButton>;
 }
 
 function DaySessions({ weekday, date, sessionsTimes }) {

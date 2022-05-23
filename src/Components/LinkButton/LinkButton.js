@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function LinkButton({ path, type, children }) {
+export default function LinkButton({ width, path, type, children }) {
   return path ? (
-    <Link to={path}>
-      <Container type={type}>{children}</Container>
-    </Link>
+    <Container width={width} type={type}>
+      <Link to={path}>{children}</Link>
+    </Container>
   ) : (
-    <Container type={type}>{children}</Container>
+    <Container width={width} type={type}>
+      {children}
+    </Container>
   );
 }
 
@@ -15,6 +17,8 @@ export default function LinkButton({ path, type, children }) {
 const Container = styled.button.attrs((props) => ({
   type: props.type ? props.type : "",
 }))`
+  width: ${(props) => (props.width ? props.width : "auto")};
+  box-sizing: border-box;
   height: 43px;
   border: none;
   background-color: #e8833a;

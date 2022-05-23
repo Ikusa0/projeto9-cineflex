@@ -132,7 +132,11 @@ export default function SeatsCatalogue() {
               id="cpf"
               value={cpf}
             />
-            <LinkButton type="submit">Reservar assento(s)</LinkButton>
+            <div className="button-container">
+              <LinkButton width={"225px"} type="submit">
+                Reservar assento(s)
+              </LinkButton>
+            </div>
             <Footer movieCover={session.movie.posterURL} movieTitle={session.movie.title} />
           </form>
         </Container>
@@ -158,6 +162,14 @@ const Container = styled.div`
     font-size: 24px;
     line-height: 28px;
     margin-bottom: 35px;
+  }
+
+  .button-container {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
   }
 `;
 
