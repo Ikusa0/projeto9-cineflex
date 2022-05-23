@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Header() {
   return (
     <Container>
-      <span>CINEFLEX</span>
+      <Link to="/">
+        <span>CINEFLEX</span>
+      </Link>
     </Container>
   );
 }

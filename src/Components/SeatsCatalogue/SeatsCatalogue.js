@@ -1,17 +1,23 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 import LinkButton from "../LinkButton/LinkButton";
 
-function Form({ label, placeholder, id }) {
+function Input({ label, value, onChange, placeholder, id }) {
   return (
-    <StyledForm>
+    <StyledInput>
       <label htmlFor={id}>{label}</label>
-      <input type="text" id={id} placeholder={placeholder} />
-    </StyledForm>
+      <input
+        onChange={onChange ? onChange : () => {}}
+        value={value ? value : ""}
+        type="text"
+        id={id}
+        placeholder={placeholder}
+      />
+    </StyledInput>
   );
 }
 
@@ -25,12 +31,58 @@ function SeatDescription({ text, isAvailable, isSelected }) {
 }
 
 export default function SeatsCatalogue() {
+  const navigate = useNavigate();
   const [session, setSession] = useState(null);
+  const [seats, setSeats] = useState(null);
   const { idSession } = useParams();
+
+  const [cpf, setCpf] = useState(null);
+  const [name, setName] = useState(null);
+
+  function toggleSeat(index) {
+    if (!seats[index].isAvailable) {
+      alert("Esse assento não está disponível");
+      return;
+    }
+    const newSeats = [...seats];
+    newSeats[index].isSelected = !newSeats[index].isSelected;
+    setSeats(newSeats);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const selectedSeats = seats.filter((seat) => seat.isSelected);
+    const ids = selectedSeats.map((seat) => seat.id);
+
+    if (ids.length === 0) {
+      alert("Selecione ao menos um assento!");
+      return;
+    }
+
+    const data = {
+      movie: {
+        title: session.movie.title,
+      },
+      session: `${session.day.date} ${session.name}`,
+      tickets: selectedSeats.map((seat) => `Assento ${seat.name}`),
+      buyer: { name, cpf },
+    };
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", {
+      ids,
+      name,
+      cpf: cpf.replace(/\D/g, ""),
+    });
+    promise.then(() => {
+      navigate("/success", { state: data });
+    });
+  }
 
   useEffect(() => {
     const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSession}/seats`);
     promise.then((response) => {
+      setSeats(response.data.seats.map((seat) => ({ ...seat, isSelected: false })));
       setSession(response.data);
     });
   }, [idSession]);
@@ -40,22 +92,49 @@ export default function SeatsCatalogue() {
       {session ? (
         <Container>
           <h1>Selecione o filme</h1>
-          <SeatContainer>
-            {session.seats.map((seat, index) => (
-              <Seat key={index} isAvailable={seat.isAvailable}>
-                {seat.name}
-              </Seat>
-            ))}
-          </SeatContainer>
-          <SeatDescriptionContainer>
-            <SeatDescription text="Selecionado" isAvailable={true} isSelected={true} />
-            <SeatDescription text="Disponível" isAvailable={true} />
-            <SeatDescription text="Indisponível" isAvailable={false} />
-          </SeatDescriptionContainer>
-          <Form label="Nome do comprador:" placeholder="Digite seu nome..." id="1" />
-          <Form label="Nome do comprador:" placeholder="Digite seu CPF..." id="2" />
-          <LinkButton url="/">Reservar assento(s)</LinkButton>
-          <Footer movieCover={session.movie.posterURL} movieTitle={session.movie.title} />
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <SeatContainer>
+              {seats.map((seat, index) => (
+                <Seat
+                  onClick={() => {
+                    toggleSeat(index);
+                  }}
+                  key={index}
+                  isAvailable={seat.isAvailable}
+                  isSelected={seat.isSelected}
+                  value={seat.name}
+                />
+              ))}
+            </SeatContainer>
+            <SeatDescriptionContainer>
+              <SeatDescription text="Selecionado" isAvailable={true} isSelected={true} />
+              <SeatDescription text="Disponível" isAvailable={true} />
+              <SeatDescription text="Indisponível" />
+            </SeatDescriptionContainer>
+            <Input
+              onChange={(e) => setName(e.target.value)}
+              label="Nome do comprador:"
+              placeholder="Digite seu nome..."
+              id="name"
+              value={name}
+            />
+            <Input
+              onChange={(e) =>
+                setCpf(
+                  e.target.value
+                    .replace(/\D/g, "")
+                    .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                    .substring(0, 14)
+                )
+              }
+              label="CPF do comprador:"
+              placeholder="Digite seu CPF..."
+              id="cpf"
+              value={cpf}
+            />
+            <LinkButton type="submit">Reservar assento(s)</LinkButton>
+            <Footer movieCover={session.movie.posterURL} movieTitle={session.movie.title} />
+          </form>
         </Container>
       ) : (
         <Loading />
@@ -93,7 +172,9 @@ const SeatContainer = styled.div`
   justify-self: center;
 `;
 
-const Seat = styled.button`
+const Seat = styled.input.attrs({
+  type: "button",
+})`
   box-sizing: border-box;
   width: 26px;
   height: 26px;
@@ -139,7 +220,7 @@ const SeatDescriptionContainer = styled.div`
   }
 `;
 
-const StyledForm = styled.div`
+const StyledInput = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 10px;

@@ -1,16 +1,20 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-export default function LinkButton({ url, children }) {
-  return (
-    <Container>
-      <Link to={url}>{children}</Link>
-    </Container>
+export default function LinkButton({ path, type, children }) {
+  return path ? (
+    <Link to={path}>
+      <Container type={type}>{children}</Container>
+    </Link>
+  ) : (
+    <Container type={type}>{children}</Container>
   );
 }
 
 // ================================ STYLED COMPONENTS ================================ //
-const Container = styled.button`
+const Container = styled.button.attrs((props) => ({
+  type: props.type ? props.type : "",
+}))`
   height: 43px;
   border: none;
   background-color: #e8833a;
